@@ -1,18 +1,4 @@
-import axios from "axios";
-import Vue from 'vue';
 // import router from '../router';
-// import store from '../store'
-
-let api =  Vue.prototype.$http = axios.create({
- headers: {
-    "Accept": "application/json",
-    "Content-Type": "application/json"
-    }
-})
-
-
-Vue.config.productionTip = false;
-
 /** 
  * @author Ahmed khan
  * ----------------------------------------------------------------------
@@ -25,29 +11,29 @@ Vue.config.productionTip = false;
  * @export api - exporting inteceptor instance for initialization
  * 
  * */
- 
-api.defaults.timeout = 500000;
-api.interceptors.request.use(
-    config => {
-        // const token = store.getters.getAuthToken;
-        // if (token) {
-        //     config.headers.common["Authorization"] = `Bearer ${token}`;
-        // }
+
+
+export default function ({ $axios, store }) {
+    $axios.onRequest(config => {
+        // console.log(store.getters.getAuthToken())
+        if(store.state.authToken){
+            $axios.setToken(store.state.authToken, 'Bearer')
+        }
         return config;
-    },
-    error => {
+    }, error => {
         return Promise.reject(error);
-    }
-);
-api.interceptors.response.use(
-    response => {
+    })
+
+    $axios.onResponse((response) => {
         if (response.status === 200 || response.status === 201) {
             return Promise.resolve(response);
         } else {
             return Promise.reject(response);
         }
-    },
-    error => {
+    })
+
+
+    $axios.onError(error => {
         /* Handle Errors for all status */
         if (error && 
             typeof error === "object" &&  
@@ -72,9 +58,8 @@ api.interceptors.response.use(
         }else{
             return Promise.reject(error);
         }
-        /*----------------------------*/ 
-    }
-);  
+    })
+}
 
 function redirect(){
     // redirect({

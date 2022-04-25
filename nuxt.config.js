@@ -1,3 +1,5 @@
+const  path  = require ('path');
+
 export default {
   target: 'static',
   router: {
@@ -26,17 +28,17 @@ export default {
     apiUrl: process.env.API_URL
   },
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [`~/assets/css/main.css`],
+  // css: [`~/assets/css/main.css`],
   cli: {
     badgeMessages: ['DadJokes App!'],
     bannerColor: 'blue'
   },
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [ 
-    { 
-      src: '~/plugins/axios.js',
-      mode: 'client'
-    }
+    // { src: '~plugins/nuxt-tippy', ssr: false },
+    { src: '~plugins/nuxt-persistedstate', ssr: false  },
+    { src: '~plugins/nuxt-vuex', ssr: false },
+    { src: '~plugins/axios.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -51,6 +53,26 @@ export default {
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  // build: {
+  //   extend(config, { dev, isClient }) {
+  //     /**
+  //      * Initialise SVG Sprites
+  //      */
+    
+  //     // get and remove file loader
+  //     const rule = config.module.rules.find(r => r.test.toString() === '/\\.css$/i');
+  //     console.log("rule:",config.module.rules);
+  //     console.log("rule:",rule);
+  //     config.module.rules.splice(config.module.rules.indexOf(rule), 1);
+  
+    
+  //     config.module.rules.push({
+  //       test: /\.svg$/,
+  //       include: [
+  //         path.resolve(__dirname, 'assets/svg'),
+  //       ],
+  //       use: 'svg-sprite-loader',
+  //     });
+  //   },
+  // }
 }

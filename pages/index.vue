@@ -1,23 +1,15 @@
 <template>
-  <div class="card">
-    <h2>Welcome to Dadjokes app</h2>
-  </div>
+  <Header/>
 </template>
 
 <script>
-export default {
-    head(){
-        return {
-            title: 'Welcome to dad jokes',
-            meta: [
-                {
-                    hid: 'description',
-                    name: 'description',
-                    content: 'Best place for corny dad jokes'
-                }
-            ]
-        }
-    }
+const Header = () => import("../components/Header.vue");
 
-};
+export default {
+  layout: 'newsfeed',
+  name: 'Home',
+  components: {
+    Header,
+  },
+}
 </script>
